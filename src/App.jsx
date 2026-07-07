@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Menu, X, ArrowRight, ArrowLeft, Github, Linkedin, Twitter, Mail,
   Download, ExternalLink, Clock, BarChart3, Cpu, Code2, Layers,
@@ -32,8 +32,39 @@ const FontStyles = () => (
     .floaty { animation: floaty 4s ease-in-out infinite; }
     .floaty-slow { animation: floaty 6s ease-in-out infinite; }
     .spin-slow { animation: spin-slow 40s linear infinite; }
+
+    /* scroll reveal */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal-visible { opacity: 1; transform: translateY(0); }
+
+    /* hero entrance cascade */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+    .fade-up { animation: fadeUp 0.8s ease both; }
+
+    /* typewriter cursor */
+    @keyframes blink { 50% { opacity: 0; } }
+    .typewriter-cursor { animation: blink 1s step-end infinite; margin-left: 2px; }
+
+    /* name underline draw */
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+    .swoosh-draw path { stroke-dasharray: 340; stroke-dashoffset: 340; animation: draw 1.1s ease forwards 0.5s; }
+
+    /* button shine sweep */
+    .btn-shine { position: relative; overflow: hidden; }
+    .btn-shine::after {
+      content: "";
+      position: absolute;
+      top: 0; left: -75%;
+      width: 45%; height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.4), transparent);
+      transform: skewX(-20deg);
+      transition: left 0.6s ease;
+    }
+    .btn-shine:hover::after { left: 130%; }
+
     @media (prefers-reduced-motion: reduce) {
-      .floaty, .floaty-slow, .spin-slow { animation: none; }
+      .floaty, .floaty-slow, .spin-slow, .fade-up, .swoosh-draw path, .typewriter-cursor { animation: none; }
+      .reveal { opacity: 1; transform: none; transition: none; }
     }
   `}</style>
 );
@@ -238,10 +269,11 @@ const Button = ({ children, icon: Icon, variant = "solid", onClick, href, classN
     accent: "text-white hover:-translate-y-0.5 shadow-sm",
     light: "bg-white text-neutral-900 hover:bg-neutral-100 hover:-translate-y-0.5 shadow-sm"
   };
+  const shine = variant === "solid" || variant === "accent" ? "btn-shine" : "";
   const Comp = href ? "a" : "button";
   const style = variant === "accent" ? { backgroundColor: ACCENT } : {};
   return (
-    <Comp href={href} onClick={onClick} style={style} className={`${base} ${styles[variant]} ${className}`}>
+    <Comp href={href} onClick={onClick} style={style} className={`${base} ${styles[variant]} ${shine} ${className}`}>
       {children}
       {Icon && <Icon size={16} />}
     </Comp>
@@ -269,6 +301,106 @@ const ImagePlaceholder = ({ label = "Add your photo", tall = false, className = 
     <span className="text-xs font-body" style={tint ? { color: tint.c } : {}}>{label}</span>
   </div>
 );
+
+/* Scroll-triggered fade-up wrapper — used to bring each section in gently as you scroll */
+const Reveal = ({ children, className = "", delay = 0 }) => {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          obs.disconnect();
+        }
+      },
+      { threshold: 0.12 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  return (
+    <div ref={ref} className={`reveal ${visible ? "reveal-visible" : ""} ${className}`} style={{ transitionDelay: `${delay}ms` }}>
+      {children}
+    </div>
+  );
+};
+
+/* Subtle 3D tilt on mouse move — the signature interaction for the Projects section */
+const TiltCard = ({ children, className = "" }) => {
+  const ref = useRef(null);
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+
+  const handleMove = (e) => {
+    const el = ref.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const px = (e.clientX - rect.left) / rect.width - 0.5;
+    const py = (e.clientY - rect.top) / rect.height - 0.5;
+    setTilt({ x: px, y: py });
+  };
+  const handleLeave = () => setTilt({ x: 0, y: 0 });
+
+  return (
+    <div
+      ref={ref}
+      onMouseMove={handleMove}
+      onMouseLeave={handleLeave}
+      className={className}
+      style={{
+        transform: `perspective(1000px) rotateX(${(-tilt.y * 6).toFixed(2)}deg) rotateY(${(tilt.x * 6).toFixed(2)}deg)`,
+        transition: "transform 0.25s ease"
+      }}
+    >
+      {children}
+    </div>
+  );
+};
+
+/* Rotating role text under the hero name */
+const ROLES = [
+  "AI & Data Science Engineering Student",
+  "Computer Vision Enthusiast",
+  "Time-Series Forecaster",
+  "Full-Stack Web Developer"
+];
+
+const Typewriter = () => {
+  const [text, setText] = useState("");
+  const [roleIndex, setRoleIndex] = useState(0);
+  const [deleting, setDeleting] = useState(false);
+
+  useEffect(() => {
+    const current = ROLES[roleIndex];
+    const speed = deleting ? 28 : 55;
+    const timeout = setTimeout(() => {
+      if (!deleting) {
+        if (text.length < current.length) {
+          setText(current.slice(0, text.length + 1));
+        } else {
+          setTimeout(() => setDeleting(true), 1500);
+        }
+      } else if (text.length > 0) {
+        setText(current.slice(0, text.length - 1));
+      } else {
+        setDeleting(false);
+        setRoleIndex((roleIndex + 1) % ROLES.length);
+      }
+    }, speed);
+    return () => clearTimeout(timeout);
+  }, [text, deleting, roleIndex]);
+
+  return (
+    <AccentPill icon={Sparkles}>
+      {text}
+      <span className="typewriter-cursor">|</span>
+    </AccentPill>
+  );
+};
 
 /* ---------------------------------------------------------------
    NAVBAR
@@ -342,17 +474,25 @@ const Hero = ({ onNav }) => (
     <div className="relative mx-auto max-w-6xl grid md:grid-cols-2 gap-14 items-center">
       {/* LEFT — copy */}
       <div className="text-center md:text-left">
-        <AccentPill icon={Sparkles}>AI & Data Science Engineering Student</AccentPill>
+        <div className="fade-up" style={{ animationDelay: "0.05s" }}>
+          <Typewriter />
+        </div>
 
-        <h1 className="font-display text-6xl md:text-7xl font-semibold leading-[1.02] text-neutral-900 mt-6">
-          Mohamed
-        </h1>
-        <p className="mt-5 max-w-lg text-base md:text-lg text-neutral-500 font-body mx-auto md:mx-0">
+        <div className="relative inline-block mt-6 fade-up" style={{ animationDelay: "0.2s" }}>
+          <h1 className="font-display text-6xl md:text-7xl font-semibold leading-[1.02] text-neutral-900 relative z-10">
+            Mohamed
+          </h1>
+          <svg className="absolute -bottom-1 left-0 w-full h-4 swoosh-draw" viewBox="0 0 300 20" preserveAspectRatio="none">
+            <path d="M2 14 Q 75 2, 150 12 T 298 10" fill="none" stroke={ACCENT} strokeWidth="4" strokeLinecap="round" />
+          </svg>
+        </div>
+
+        <p className="mt-5 max-w-lg text-base md:text-lg text-neutral-500 font-body mx-auto md:mx-0 fade-up" style={{ animationDelay: "0.35s" }}>
           Third-year engineering student specializing in AI & Data Science for Industrial Systems at ENSAM Meknès.
           I build applied machine learning models, computer vision tools, and clean web experiences — and I'm
           looking for internships and research opportunities where I can keep building things that ship.
         </p>
-        <div className="mt-8 flex flex-wrap items-center justify-center md:justify-start gap-3">
+        <div className="mt-8 flex flex-wrap items-center justify-center md:justify-start gap-3 fade-up" style={{ animationDelay: "0.5s" }}>
           <Button variant="accent" icon={Download} href="#resume">Download CV</Button>
           <Button variant="outline" icon={Github} href="#">GitHub</Button>
           <Button variant="outline" icon={Linkedin} href="#">LinkedIn</Button>
@@ -361,7 +501,7 @@ const Hero = ({ onNav }) => (
       </div>
 
       {/* RIGHT — dynamic photo composition */}
-      <div className="relative h-[26rem] flex items-center justify-center">
+      <div className="relative h-[26rem] flex items-center justify-center fade-up" style={{ animationDelay: "0.3s" }}>
         {/* dashed orbit ring */}
         <svg viewBox="0 0 400 400" className="absolute inset-0 w-full h-full spin-slow">
           <circle cx="200" cy="200" r="170" fill="none" stroke={ACCENT} strokeOpacity="0.18" strokeWidth="2" strokeDasharray="6 10" />
@@ -514,8 +654,8 @@ const Skills = () => (
         {SKILLS.map((s) => {
           const p = PALETTE[s.color % PALETTE.length];
           return (
-            <Card key={s.name} className="p-5 flex items-center gap-4 border-t-4" style={{ borderTopColor: p.c }}>
-              <div className="h-11 w-11 shrink-0 rounded-2xl flex items-center justify-center" style={{ backgroundColor: p.bg, color: p.c }}>
+            <Card key={s.name} className="p-5 flex items-center gap-4 border-t-4 group" style={{ borderTopColor: p.c }}>
+              <div className="h-11 w-11 shrink-0 rounded-2xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110" style={{ backgroundColor: p.bg, color: p.c }}>
                 <s.icon size={19} />
               </div>
               <div>
@@ -546,65 +686,69 @@ const Projects = ({ onOpenProject }) => {
         </div>
 
         {/* Featured project — larger spotlight card */}
-        <Card className="p-4 md:p-6 mb-6 overflow-hidden">
-          <div className="grid md:grid-cols-2 gap-6 items-center">
-            <ImagePlaceholder label="Add project screenshot" tall tint={fp} icon={Folder} className="!h-64 md:!h-80" />
-            <div>
-              <AccentPill icon={Sparkles}>FEATURED PROJECT</AccentPill>
-              <h3 className="font-display text-2xl font-semibold text-neutral-900 mt-3">{featured.title}</h3>
-              <p className="text-sm text-neutral-500 font-body mt-2">{featured.description}</p>
-              <div className="mt-4 space-y-2 text-xs font-body text-neutral-500">
-                <div className="flex gap-2"><Flag size={13} className="mt-0.5 shrink-0" style={{ color: fp.c }} /> {featured.problem}</div>
-                <div className="flex gap-2"><User size={13} className="mt-0.5 shrink-0" style={{ color: fp.c }} /> {featured.role}</div>
-                <div className="flex gap-2"><Trophy size={13} className="mt-0.5 shrink-0" style={{ color: fp.c }} /> {featured.outcome}</div>
-              </div>
-              <div className="flex flex-wrap gap-2 mt-4 mb-5">
-                {featured.tech.map((t) => <Pill key={t}>{t}</Pill>)}
-              </div>
-              <div className="flex gap-3">
-                <Button variant="accent" icon={ArrowRight} onClick={() => onOpenProject(featured.slug)} className="!py-2.5 !px-4 text-xs">
-                  View Details
-                </Button>
-                <Button variant="outline" icon={Github} href={featured.github} className="!py-2.5 !px-4 text-xs">
-                  GitHub
-                </Button>
+        <TiltCard className="mb-6">
+          <Card className="p-4 md:p-6 overflow-hidden">
+            <div className="grid md:grid-cols-2 gap-6 items-center">
+              <ImagePlaceholder label="Add project screenshot" tall tint={fp} icon={Folder} className="!h-64 md:!h-80" />
+              <div>
+                <AccentPill icon={Sparkles}>FEATURED PROJECT</AccentPill>
+                <h3 className="font-display text-2xl font-semibold text-neutral-900 mt-3">{featured.title}</h3>
+                <p className="text-sm text-neutral-500 font-body mt-2">{featured.description}</p>
+                <div className="mt-4 space-y-2 text-xs font-body text-neutral-500">
+                  <div className="flex gap-2"><Flag size={13} className="mt-0.5 shrink-0" style={{ color: fp.c }} /> {featured.problem}</div>
+                  <div className="flex gap-2"><User size={13} className="mt-0.5 shrink-0" style={{ color: fp.c }} /> {featured.role}</div>
+                  <div className="flex gap-2"><Trophy size={13} className="mt-0.5 shrink-0" style={{ color: fp.c }} /> {featured.outcome}</div>
+                </div>
+                <div className="flex flex-wrap gap-2 mt-4 mb-5">
+                  {featured.tech.map((t) => <Pill key={t}>{t}</Pill>)}
+                </div>
+                <div className="flex gap-3">
+                  <Button variant="accent" icon={ArrowRight} onClick={() => onOpenProject(featured.slug)} className="!py-2.5 !px-4 text-xs">
+                    View Details
+                  </Button>
+                  <Button variant="outline" icon={Github} href={featured.github} className="!py-2.5 !px-4 text-xs">
+                    GitHub
+                  </Button>
+                </div>
               </div>
             </div>
-          </div>
-        </Card>
+          </Card>
+        </TiltCard>
 
         {/* Remaining projects — grid */}
         <div className="grid md:grid-cols-2 gap-6">
           {rest.map((p) => {
             const pc = PALETTE[p.color % PALETTE.length];
             return (
-              <Card key={p.slug} className="p-5 flex flex-col overflow-hidden">
-                <ImagePlaceholder label="Add project screenshot" tint={pc} icon={Folder} className="mb-4" />
-                <div className="flex items-center justify-between">
-                  <h3 className="font-display text-xl font-semibold text-neutral-900">{p.title}</h3>
-                  <ArrowUpRight size={18} style={{ color: pc.c }} />
-                </div>
-                <p className="text-sm text-neutral-500 font-body mt-2">{p.description}</p>
+              <TiltCard key={p.slug}>
+                <Card className="p-5 flex flex-col overflow-hidden h-full">
+                  <ImagePlaceholder label="Add project screenshot" tint={pc} icon={Folder} className="mb-4" />
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-display text-xl font-semibold text-neutral-900">{p.title}</h3>
+                    <ArrowUpRight size={18} style={{ color: pc.c }} />
+                  </div>
+                  <p className="text-sm text-neutral-500 font-body mt-2">{p.description}</p>
 
-                <div className="mt-4 space-y-2 text-xs font-body text-neutral-500">
-                  <div className="flex gap-2"><Flag size={13} className="mt-0.5 shrink-0" style={{ color: pc.c }} /> {p.problem}</div>
-                  <div className="flex gap-2"><User size={13} className="mt-0.5 shrink-0" style={{ color: pc.c }} /> {p.role}</div>
-                  <div className="flex gap-2"><Trophy size={13} className="mt-0.5 shrink-0" style={{ color: pc.c }} /> {p.outcome}</div>
-                </div>
+                  <div className="mt-4 space-y-2 text-xs font-body text-neutral-500">
+                    <div className="flex gap-2"><Flag size={13} className="mt-0.5 shrink-0" style={{ color: pc.c }} /> {p.problem}</div>
+                    <div className="flex gap-2"><User size={13} className="mt-0.5 shrink-0" style={{ color: pc.c }} /> {p.role}</div>
+                    <div className="flex gap-2"><Trophy size={13} className="mt-0.5 shrink-0" style={{ color: pc.c }} /> {p.outcome}</div>
+                  </div>
 
-                <div className="flex flex-wrap gap-2 mt-4 mb-5">
-                  {p.tech.map((t) => <Pill key={t}>{t}</Pill>)}
-                </div>
+                  <div className="flex flex-wrap gap-2 mt-4 mb-5">
+                    {p.tech.map((t) => <Pill key={t}>{t}</Pill>)}
+                  </div>
 
-                <div className="mt-auto flex gap-3">
-                  <Button variant="outline" icon={ArrowRight} onClick={() => onOpenProject(p.slug)} className="!py-2 !px-4 text-xs">
-                    Details
-                  </Button>
-                  <Button variant="outline" icon={Github} href={p.github} className="!py-2 !px-4 text-xs">
-                    GitHub
-                  </Button>
-                </div>
-              </Card>
+                  <div className="mt-auto flex gap-3">
+                    <Button variant="outline" icon={ArrowRight} onClick={() => onOpenProject(p.slug)} className="!py-2 !px-4 text-xs">
+                      Details
+                    </Button>
+                    <Button variant="outline" icon={Github} href={p.github} className="!py-2 !px-4 text-xs">
+                      GitHub
+                    </Button>
+                  </div>
+                </Card>
+              </TiltCard>
             );
           })}
         </div>
@@ -870,18 +1014,18 @@ export default function Portfolio() {
       ) : (
         <>
           <Hero onNav={handleNav} />
-          <About />
-          <Education />
-          <Skills />
-          <Projects onOpenProject={(slug) => setPage(slug)} />
-          <Experience />
-          <Certifications />
-          <Achievements />
-          <Resume />
+          <Reveal><About /></Reveal>
+          <Reveal><Education /></Reveal>
+          <Reveal><Skills /></Reveal>
+          <Reveal><Projects onOpenProject={(slug) => setPage(slug)} /></Reveal>
+          <Reveal><Experience /></Reveal>
+          <Reveal><Certifications /></Reveal>
+          <Reveal><Achievements /></Reveal>
+          <Reveal><Resume /></Reveal>
         </>
       )}
 
-      <Contact />
+      <Reveal><Contact /></Reveal>
     </div>
   );
 }
