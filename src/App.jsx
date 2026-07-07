@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
+import meImg from "./me.jpeg";
 import {
   Menu, X, ArrowRight, ArrowLeft, Github, Linkedin, Twitter, Mail,
   Download, ExternalLink, Clock, BarChart3, Cpu, Code2, Layers,
   GraduationCap, Briefcase, Award, Camera, Send, Sparkles,
   CheckCircle2, MapPin, User, Target, Search, Trophy, Medal,
   BookOpen, Database, LineChart, GitBranch, Eye, Puzzle,
-  ArrowUpRight, Building2, Flag, Calendar, Rocket, Folder
+  ArrowUpRight, Building2, Flag, Calendar, Rocket, Folder,
+  Lightbulb, Globe, AlertTriangle, Terminal, FileText, Link2,
+  ListChecks, ChevronRight, Wrench
 } from "lucide-react";
 
 /* ---------------------------------------------------------------
@@ -110,74 +113,235 @@ const PROJECTS = [
   {
     slug: "cable-defect-detection",
     color: 4,
+    status: "In Progress",
     title: "Cable Defect Detection",
     description: "A computer-vision system to automatically flag cable surface defects on a production line, built as a conceptual AI contribution during a quality-department internship.",
     problem: "Manual visual inspection of cables is slow and inconsistent across shifts.",
     role: "Sole developer — model design, training, and evaluation",
     tech: ["Python", "TensorFlow", "MobileNetV2", "Transfer Learning"],
     outcome: "Proof-of-concept classifier demonstrating feasibility of automated defect flagging.",
-    github: "#",
-    demo: "#"
+    objective: "Automate visual detection of surface defects on cables to reduce manual inspection time.",
+    useCase: "Conceptually deployed within a factory quality-control workflow to flag defective cable segments before packaging.",
+    context: "During a quality-department internship, manual inspection was identified as a slow, inconsistent bottleneck.",
+    challenge: "Build a lightweight, accurate classifier that could realistically run on constrained industrial hardware.",
+    goal: "Demonstrate feasibility of automated defect detection using transfer learning on a small labeled dataset.",
+    dataset: {
+      source: "Internal cable images collected during the internship — add exact source",
+      size: "Add number of images",
+      features: "RGB surface images of cable segments",
+      target: "Defect / No-defect classification"
+    },
+    pipeline: ["Data Collection", "Data Cleaning", "EDA", "Feature Engineering", "Model Training", "Hyperparameter Tuning", "Evaluation", "Deployment"],
+    modelsApproach: {
+      tested: ["MobileNetV2 (transfer learning)", "Add other models tested"],
+      reasoning: "MobileNetV2 was chosen for its balance of accuracy and low computational cost — well suited to potential deployment on constrained industrial hardware.",
+      final: "Fine-tuned MobileNetV2 with a custom classification head."
+    },
+    results: {
+      metrics: [
+        { label: "Accuracy", value: "Add %" },
+        { label: "F1-Score", value: "Add value" },
+        { label: "Precision", value: "Add value" },
+        { label: "Recall", value: "Add value" }
+      ],
+      highlight: "Add your standout result — e.g. reduced manual inspection time by X%."
+    },
+    techStack: {
+      languages: ["Python"],
+      frameworks: ["TensorFlow", "Keras"],
+      libraries: ["OpenCV", "NumPy"],
+      tools: ["Add tools — e.g. Docker, Git"]
+    },
+    challengesSolutions: [
+      { challenge: "Limited labeled defect images available.", solution: "Used data augmentation and transfer learning to compensate for the small dataset size." },
+      { challenge: "Add another technical challenge.", solution: "Add how you addressed it." }
+    ],
+    structure:
+`cable-defect-detection/
+├── data/
+├── notebooks/
+├── models/
+├── src/
+├── app.py
+├── requirements.txt
+└── README.md`,
+    resources: { github: "#", demo: "#", docs: "#", dataset: "#" }
   },
   {
     slug: "tb-forecasting",
     color: 1,
+    status: "Completed",
     title: "Global TB Forecasting",
     description: "An academic research project forecasting tuberculosis incidence across 11 high-burden countries using classical and machine-learning time-series models.",
     problem: "Public health planning needs reliable forward-looking incidence estimates.",
     role: "Model development, evaluation, and documentation",
     tech: ["ARIMA", "SARIMAX", "XGBoost", "LightGBM"],
     outcome: "Full documentation site and comparative analysis of five forecasting approaches.",
-    github: "#",
-    demo: "#"
+    objective: "Forecast TB incidence across 11 high-burden countries to support public-health planning.",
+    useCase: "Outputs could inform resource allocation and early-warning systems for health ministries.",
+    context: "Academic research project analyzing multi-country tuberculosis incidence data.",
+    challenge: "Model diverse, noisy epidemiological time series across countries with very different trends.",
+    goal: "Compare classical and ML forecasting methods and identify the most reliable approach per country profile.",
+    dataset: {
+      source: "WHO Global Tuberculosis Report — add exact dataset link",
+      size: "Add number of years / data points",
+      features: "Yearly incidence rate, country, add other features",
+      target: "TB incidence rate (next-period forecast)"
+    },
+    pipeline: ["Data Collection", "Data Cleaning", "EDA", "Feature Engineering", "Model Training", "Hyperparameter Tuning", "Evaluation", "Deployment"],
+    modelsApproach: {
+      tested: ["ARIMA", "SARIMA", "SARIMAX", "XGBoost", "LightGBM"],
+      reasoning: "Classical models established a statistical baseline; gradient-boosting models were added to capture non-linear patterns and exogenous factors.",
+      final: "Add your best-performing model and why it was selected."
+    },
+    results: {
+      metrics: [
+        { label: "RMSE", value: "Add value" },
+        { label: "MAE", value: "Add value" },
+        { label: "R²", value: "Add value" },
+        { label: "MAPE", value: "Add value" }
+      ],
+      highlight: "Add your standout result — e.g. best model outperformed baseline by X%."
+    },
+    techStack: {
+      languages: ["Python"],
+      frameworks: ["Statsmodels", "Scikit-learn"],
+      libraries: ["XGBoost", "LightGBM", "Pandas"],
+      tools: ["MkDocs", "Git"]
+    },
+    challengesSolutions: [
+      { challenge: "Inconsistent data quality across countries.", solution: "Applied country-specific preprocessing and imputation strategies." },
+      { challenge: "Add another technical challenge.", solution: "Add how you addressed it." }
+    ],
+    structure:
+`tb-forecasting/
+├── data/
+├── notebooks/
+├── models/
+├── src/
+├── docs/
+├── requirements.txt
+└── README.md`,
+    resources: { github: "#", demo: "#", docs: "#", dataset: "#" }
   },
   {
     slug: "louja-tours",
     color: 2,
+    status: "Completed",
     title: "Louja Tours",
     description: "A single-file, cinematic travel platform showcasing 31 real tours across Morocco, grouped by departure city.",
     problem: "Small travel operators need a polished web presence without a full stack.",
     role: "Solo design and development",
     tech: ["HTML", "CSS", "JavaScript"],
     outcome: "A fully working, self-contained web app with dynamic routing and a distinct visual identity.",
-    github: "#",
-    demo: "#"
+    objective: "Give a small travel operator a polished, conversion-focused web presence without a full backend.",
+    useCase: "Used as a real front-end for browsing and inquiring about Morocco tour packages.",
+    context: "Small travel businesses in Morocco often lack a professional, distinctive web presence.",
+    challenge: "Build a fast, visually rich experience entirely in a single static file, with routing across 31 tours.",
+    goal: "Ship a production-ready site with minimal infrastructure and no build step.",
+    pipeline: ["Design", "Content Structuring", "Development", "Interactivity & Animation", "Testing", "Launch"],
+    techStack: { languages: ["HTML", "CSS", "JavaScript"], frameworks: [], libraries: [], tools: ["Add tools"] },
+    challengesSolutions: [
+      { challenge: "Keeping a single-file app maintainable with 31 tours.", solution: "Used a data-driven JS structure so every tour renders from one shared template." }
+    ],
+    structure:
+`louja-tours/
+├── index.html
+├── assets/
+│   ├── images/
+│   └── icons/
+└── README.md`,
+    resources: { github: "#", demo: "#", docs: null, dataset: null }
   },
   {
     slug: "graph-theory-course",
     color: 6,
+    status: "Completed",
     title: "Interactive Graph Theory Course",
     description: "A self-contained course module for an engineering curriculum with live algorithm visualizations.",
     problem: "Graph algorithms are hard to grasp from static slides alone.",
     role: "Content design and interactive visualization development",
     tech: ["HTML", "JavaScript", "SVG Animation"],
     outcome: "Interactive Dijkstra and Euler-path visualizations plus a set of corrected exercises.",
-    github: "#",
-    demo: "#"
+    objective: "Help students grasp graph algorithms through interactive visualization rather than static slides.",
+    useCase: "Used as supplementary material for an engineering algorithms module.",
+    context: "Students often struggle to visualize how traversal and shortest-path algorithms evolve step by step.",
+    challenge: "Build clear, correct, interactive visualizations of Dijkstra and Euler-path algorithms in plain JavaScript.",
+    goal: "Provide a self-contained, dependency-free learning resource with corrected exercises.",
+    pipeline: ["Content Design", "Algorithm Implementation", "Visualization Development", "Exercise Design", "Review & Testing"],
+    techStack: { languages: ["HTML", "JavaScript"], frameworks: [], libraries: ["SVG"], tools: [] },
+    challengesSolutions: [
+      { challenge: "Animating algorithm state changes smoothly.", solution: "Built a step-based state machine driving the SVG rendering frame by frame." }
+    ],
+    structure:
+`graph-theory-course/
+├── index.html
+├── js/
+│   ├── dijkstra.js
+│   └── euler.js
+├── exercises/
+└── README.md`,
+    resources: { github: "#", demo: "#", docs: null, dataset: null }
   },
   {
     slug: "moroccan-heritage",
     color: 7,
+    status: "Completed",
     title: "Moroccan Cultural Heritage Book",
     description: "A bilingual, typographically rich document covering six thematic chapters of Moroccan cultural heritage.",
     problem: "Cultural documentation often lacks polished, shareable formatting.",
     role: "Research, writing, and document design",
     tech: ["XeLaTeX", "TikZ", "Arabic Typography"],
     outcome: "A fully typeset RTL Arabic and Word edition with custom title pages.",
-    github: "#",
-    demo: "#"
+    objective: "Produce a polished, shareable bilingual reference on Moroccan cultural heritage.",
+    useCase: "Usable as a portfolio-quality writing sample or shared educational reference document.",
+    context: "Cultural heritage documentation is often informally formatted and hard to share professionally.",
+    challenge: "Typeset RTL Arabic and Latin text together with custom title pages and consistent styling.",
+    goal: "Deliver a fully typeset document in both Word and XeLaTeX/PDF formats.",
+    pipeline: ["Research", "Writing", "Typesetting", "Arabic Typography & RTL Layout", "Review", "Publishing"],
+    techStack: { languages: ["LaTeX"], frameworks: [], libraries: ["TikZ", "Amiri Font"], tools: ["Overleaf"] },
+    challengesSolutions: [
+      { challenge: "Mixing right-to-left Arabic with left-to-right Latin text cleanly.", solution: "Used XeLaTeX with dedicated RTL packages and the Amiri font for consistent Arabic typography." }
+    ],
+    structure:
+`moroccan-heritage/
+├── chapters/
+├── figures/
+├── main.tex
+└── README.md`,
+    resources: { github: "#", demo: null, docs: "#", dataset: null }
   },
   {
     slug: "add-your-project",
     color: 5,
+    status: "In Progress",
     title: "Add Your Next Project",
     description: "Short description of the problem this project solves and how you approached it.",
     problem: "What challenge did this address?",
     role: "Your role on the project",
     tech: ["Tech", "Stack"],
     outcome: "What was the measurable result or impact?",
-    github: "#",
-    demo: "#"
+    objective: "What was this project meant to achieve?",
+    useCase: "Where or how would this be used in the real world?",
+    context: "What situation or need motivated this project?",
+    challenge: "What was technically hard about it?",
+    goal: "What did success look like?",
+    dataset: { source: "Add source", size: "Add size", features: "Add features", target: "Add target variable" },
+    pipeline: ["Data Collection", "Data Cleaning", "EDA", "Feature Engineering", "Model Training", "Hyperparameter Tuning", "Evaluation", "Deployment"],
+    modelsApproach: { tested: ["Add models tested"], reasoning: "Add your reasoning.", final: "Add your final model choice." },
+    results: { metrics: [{ label: "Metric", value: "Add value" }], highlight: "Add your standout result." },
+    techStack: { languages: ["Add"], frameworks: ["Add"], libraries: ["Add"], tools: ["Add"] },
+    challengesSolutions: [{ challenge: "Add a challenge.", solution: "Add your solution." }],
+    structure:
+`project/
+├── data/
+├── notebooks/
+├── models/
+├── src/
+├── app.py
+├── requirements.txt
+└── README.md`,
+    resources: { github: "#", demo: "#", docs: "#", dataset: "#" }
   }
 ];
 
@@ -532,7 +696,11 @@ const Hero = ({ onNav }) => (
         })}
 
         {/* center photo */}
-        <ImagePlaceholder label="Add your photo" className="!h-52 !w-52 !rounded-full relative z-10 shadow-xl" />
+        <img
+          src={meImg}
+          alt="Mohamed"
+          className="h-52 w-52 rounded-full relative z-10 shadow-xl object-cover border-4 border-white"
+        />
 
         {/* floating stat chips */}
         <div
@@ -691,7 +859,10 @@ const Projects = ({ onOpenProject }) => {
             <div className="grid md:grid-cols-2 gap-6 items-center">
               <ImagePlaceholder label="Add project screenshot" tall tint={fp} icon={Folder} className="!h-64 md:!h-80" />
               <div>
-                <AccentPill icon={Sparkles}>FEATURED PROJECT</AccentPill>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <AccentPill icon={Sparkles}>FEATURED PROJECT</AccentPill>
+                  {featured.status && <StatusPill status={featured.status} />}
+                </div>
                 <h3 className="font-display text-2xl font-semibold text-neutral-900 mt-3">{featured.title}</h3>
                 <p className="text-sm text-neutral-500 font-body mt-2">{featured.description}</p>
                 <div className="mt-4 space-y-2 text-xs font-body text-neutral-500">
@@ -706,9 +877,11 @@ const Projects = ({ onOpenProject }) => {
                   <Button variant="accent" icon={ArrowRight} onClick={() => onOpenProject(featured.slug)} className="!py-2.5 !px-4 text-xs">
                     View Details
                   </Button>
-                  <Button variant="outline" icon={Github} href={featured.github} className="!py-2.5 !px-4 text-xs">
-                    GitHub
-                  </Button>
+                  {featured.resources?.github && (
+                    <Button variant="outline" icon={Github} href={featured.resources.github} className="!py-2.5 !px-4 text-xs">
+                      GitHub
+                    </Button>
+                  )}
                 </div>
               </div>
             </div>
@@ -727,6 +900,7 @@ const Projects = ({ onOpenProject }) => {
                     <h3 className="font-display text-xl font-semibold text-neutral-900">{p.title}</h3>
                     <ArrowUpRight size={18} style={{ color: pc.c }} />
                   </div>
+                  {p.status && <div className="mt-2"><StatusPill status={p.status} /></div>}
                   <p className="text-sm text-neutral-500 font-body mt-2">{p.description}</p>
 
                   <div className="mt-4 space-y-2 text-xs font-body text-neutral-500">
@@ -743,9 +917,11 @@ const Projects = ({ onOpenProject }) => {
                     <Button variant="outline" icon={ArrowRight} onClick={() => onOpenProject(p.slug)} className="!py-2 !px-4 text-xs">
                       Details
                     </Button>
-                    <Button variant="outline" icon={Github} href={p.github} className="!py-2 !px-4 text-xs">
-                      GitHub
-                    </Button>
+                    {p.resources?.github && (
+                      <Button variant="outline" icon={Github} href={p.resources.github} className="!py-2 !px-4 text-xs">
+                        GitHub
+                      </Button>
+                    )}
                   </div>
                 </Card>
               </TiltCard>
@@ -760,47 +936,227 @@ const Projects = ({ onOpenProject }) => {
 /* ---------------------------------------------------------------
    PROJECT DETAIL
 --------------------------------------------------------------- */
+const DetailSection = ({ icon: Icon, title, color, children }) => (
+  <div className="mt-12">
+    <div className="flex items-center gap-2 mb-4">
+      <div className="h-8 w-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: color.bg, color: color.c }}>
+        <Icon size={16} />
+      </div>
+      <h2 className="font-display text-xl font-semibold text-neutral-900">{title}</h2>
+    </div>
+    {children}
+  </div>
+);
+
+const StatusPill = ({ status }) => {
+  const done = status === "Completed";
+  const p = done ? PALETTE[1] : PALETTE[2];
+  const Icon = done ? CheckCircle2 : Clock;
+  return (
+    <span className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold font-body" style={{ backgroundColor: p.bg, color: p.c }}>
+      <Icon size={13} /> {status}
+    </span>
+  );
+};
+
 const ProjectDetail = ({ project, onBack }) => {
   const pc = PALETTE[project.color % PALETTE.length];
+  const r = project.resources || {};
+
   return (
     <section className="px-4 py-16">
       <div className="mx-auto max-w-4xl">
         <button onClick={onBack} className="inline-flex items-center gap-2 text-sm font-medium text-neutral-600 hover:text-neutral-900 font-body mb-8">
           <ArrowLeft size={16} /> Back to projects
         </button>
-        <span className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold font-body" style={{ backgroundColor: pc.bg, color: pc.c }}>
-          <Code2 size={13} /> PROJECT
-        </span>
+
+        {/* ---------- 1. HERO ---------- */}
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold font-body" style={{ backgroundColor: pc.bg, color: pc.c }}>
+            <Code2 size={13} /> PROJECT
+          </span>
+          {project.status && <StatusPill status={project.status} />}
+        </div>
         <h1 className="font-display text-4xl font-semibold text-neutral-900 mt-4">{project.title}</h1>
         <p className="text-neutral-500 font-body mt-3 text-lg leading-relaxed">{project.description}</p>
 
-        <ImagePlaceholder label="Add project screenshot" tall tint={pc} icon={Folder} className="mt-8" />
+        <div className="flex flex-wrap gap-2 mt-5">
+          {project.tech.map((t) => <Pill key={t}>{t}</Pill>)}
+        </div>
 
-        <div className="grid md:grid-cols-2 gap-5 mt-10">
-          <Card className="p-5 border-t-4" style={{ borderTopColor: pc.c }}>
-            <div className="flex items-center gap-2 mb-2" style={{ color: pc.c }}><Flag size={16} /> <span className="font-display text-sm font-semibold text-neutral-900">Problem Addressed</span></div>
-            <p className="text-sm text-neutral-600 font-body">{project.problem}</p>
-          </Card>
-          <Card className="p-5 border-t-4" style={{ borderTopColor: pc.c }}>
-            <div className="flex items-center gap-2 mb-2" style={{ color: pc.c }}><User size={16} /> <span className="font-display text-sm font-semibold text-neutral-900">My Role</span></div>
-            <p className="text-sm text-neutral-600 font-body">{project.role}</p>
-          </Card>
-          <Card className="p-5 border-t-4" style={{ borderTopColor: pc.c }}>
-            <div className="flex items-center gap-2 mb-2" style={{ color: pc.c }}><Trophy size={16} /> <span className="font-display text-sm font-semibold text-neutral-900">Outcome / Impact</span></div>
-            <p className="text-sm text-neutral-600 font-body">{project.outcome}</p>
-          </Card>
-          <Card className="p-5 border-t-4" style={{ borderTopColor: pc.c }}>
-            <div className="flex items-center gap-2 mb-2" style={{ color: pc.c }}><Cpu size={16} /> <span className="font-display text-sm font-semibold text-neutral-900">Main Technologies</span></div>
-            <div className="flex flex-wrap gap-2 mt-1">
-              {project.tech.map((t) => <Pill key={t}>{t}</Pill>)}
+        <ImagePlaceholder label="Add project screenshot / demo" tall tint={pc} icon={Folder} className="mt-6" />
+
+        <div className="flex flex-wrap gap-3 mt-6">
+          {r.github && <Button variant="accent" icon={Github} href={r.github}>View on GitHub</Button>}
+          {r.demo && <Button variant="outline" icon={ExternalLink} href={r.demo}>Live Demo</Button>}
+        </div>
+
+        {/* ---------- 2. OVERVIEW ---------- */}
+        <DetailSection icon={Lightbulb} title="Overview" color={pc}>
+          <div className="grid md:grid-cols-2 gap-5">
+            <Card className="p-5">
+              <div className="flex items-center gap-2 mb-2" style={{ color: pc.c }}><Target size={16} /> <span className="font-display text-sm font-semibold text-neutral-900">Objective</span></div>
+              <p className="text-sm text-neutral-600 font-body">{project.objective}</p>
+            </Card>
+            <Card className="p-5">
+              <div className="flex items-center gap-2 mb-2" style={{ color: pc.c }}><Globe size={16} /> <span className="font-display text-sm font-semibold text-neutral-900">Real-World Use Case</span></div>
+              <p className="text-sm text-neutral-600 font-body">{project.useCase}</p>
+            </Card>
+          </div>
+        </DetailSection>
+
+        {/* ---------- 3. PROBLEM STATEMENT ---------- */}
+        <DetailSection icon={Flag} title="Problem Statement" color={pc}>
+          <Card className="p-5 space-y-4">
+            <div className="flex gap-3">
+              <MapPin size={16} className="mt-0.5 shrink-0" style={{ color: pc.c }} />
+              <div><p className="text-xs font-semibold font-body text-neutral-400 uppercase tracking-wide">Context</p><p className="text-sm text-neutral-600 font-body mt-1">{project.context}</p></div>
+            </div>
+            <div className="flex gap-3">
+              <AlertTriangle size={16} className="mt-0.5 shrink-0" style={{ color: pc.c }} />
+              <div><p className="text-xs font-semibold font-body text-neutral-400 uppercase tracking-wide">Challenge</p><p className="text-sm text-neutral-600 font-body mt-1">{project.challenge}</p></div>
+            </div>
+            <div className="flex gap-3">
+              <Target size={16} className="mt-0.5 shrink-0" style={{ color: pc.c }} />
+              <div><p className="text-xs font-semibold font-body text-neutral-400 uppercase tracking-wide">Goal</p><p className="text-sm text-neutral-600 font-body mt-1">{project.goal}</p></div>
             </div>
           </Card>
-        </div>
+        </DetailSection>
 
-        <div className="flex flex-wrap gap-3 mt-10">
-          <Button variant="accent" icon={Github} href={project.github}>View on GitHub</Button>
-          <Button variant="outline" icon={ExternalLink} href={project.demo}>View Demo</Button>
-        </div>
+        {/* ---------- 4. DATASET ---------- */}
+        {project.dataset && (
+          <DetailSection icon={Database} title="Dataset" color={pc}>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {[
+                { label: "Source", value: project.dataset.source, icon: Globe },
+                { label: "Size", value: project.dataset.size, icon: BarChart3 },
+                { label: "Features", value: project.dataset.features, icon: Layers },
+                { label: "Target Variable", value: project.dataset.target, icon: Target }
+              ].map((d) => (
+                <Card key={d.label} className="p-4">
+                  <d.icon size={15} style={{ color: pc.c }} />
+                  <p className="text-xs font-semibold font-body text-neutral-400 uppercase tracking-wide mt-2">{d.label}</p>
+                  <p className="text-xs text-neutral-600 font-body mt-1 leading-relaxed">{d.value}</p>
+                </Card>
+              ))}
+            </div>
+          </DetailSection>
+        )}
+
+        {/* ---------- 5. METHODOLOGY / PIPELINE ---------- */}
+        {project.pipeline && (
+          <DetailSection icon={ListChecks} title="Methodology / Pipeline" color={pc}>
+            <div className="flex flex-wrap items-center gap-2">
+              {project.pipeline.map((step, i) => (
+                <React.Fragment key={step}>
+                  <span className="inline-flex items-center gap-2 rounded-full bg-white border border-neutral-200 px-3 py-2 text-xs font-semibold font-body text-neutral-700 shadow-sm">
+                    <span className="h-5 w-5 rounded-full flex items-center justify-center text-[10px] text-white" style={{ backgroundColor: pc.c }}>{i + 1}</span>
+                    {step}
+                  </span>
+                  {i < project.pipeline.length - 1 && <ChevronRight size={14} className="text-neutral-300 shrink-0" />}
+                </React.Fragment>
+              ))}
+            </div>
+          </DetailSection>
+        )}
+
+        {/* ---------- 6. MODELS & APPROACH ---------- */}
+        {project.modelsApproach && (
+          <DetailSection icon={Cpu} title="Models & Approach" color={pc}>
+            <Card className="p-5 space-y-4">
+              <div>
+                <p className="text-xs font-semibold font-body text-neutral-400 uppercase tracking-wide mb-2">Models Tested</p>
+                <div className="flex flex-wrap gap-2">{project.modelsApproach.tested.map((m) => <Pill key={m}>{m}</Pill>)}</div>
+              </div>
+              <div>
+                <p className="text-xs font-semibold font-body text-neutral-400 uppercase tracking-wide mb-1">Why These Models</p>
+                <p className="text-sm text-neutral-600 font-body">{project.modelsApproach.reasoning}</p>
+              </div>
+              <div className="pt-2 border-t border-neutral-100">
+                <p className="text-xs font-semibold font-body text-neutral-400 uppercase tracking-wide mb-1">Final Model Selected</p>
+                <p className="text-sm font-semibold font-body" style={{ color: pc.c }}>{project.modelsApproach.final}</p>
+              </div>
+            </Card>
+          </DetailSection>
+        )}
+
+        {/* ---------- 7. RESULTS & PERFORMANCE ---------- */}
+        {project.results && (
+          <DetailSection icon={Trophy} title="Results & Performance" color={pc}>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {project.results.metrics.map((m) => (
+                <Card key={m.label} className="p-4 text-center">
+                  <p className="font-display text-xl font-semibold" style={{ color: pc.c }}>{m.value}</p>
+                  <p className="text-xs text-neutral-500 font-body mt-1">{m.label}</p>
+                </Card>
+              ))}
+            </div>
+            {project.results.highlight && (
+              <Card className="p-4 mt-4 flex items-center gap-3">
+                <Sparkles size={16} style={{ color: pc.c }} className="shrink-0" />
+                <p className="text-sm text-neutral-600 font-body">{project.results.highlight}</p>
+              </Card>
+            )}
+          </DetailSection>
+        )}
+
+        {/* ---------- 8. TECHNICAL STACK ---------- */}
+        {project.techStack && (
+          <DetailSection icon={Wrench} title="Technical Stack" color={pc}>
+            <Card className="p-5 space-y-4">
+              {[
+                { label: "Languages", items: project.techStack.languages },
+                { label: "Frameworks", items: project.techStack.frameworks },
+                { label: "Libraries", items: project.techStack.libraries },
+                { label: "Tools", items: project.techStack.tools }
+              ].filter((c) => c.items && c.items.length > 0).map((c) => (
+                <div key={c.label} className="flex flex-wrap items-center gap-2">
+                  <span className="text-xs font-semibold font-body text-neutral-400 uppercase tracking-wide w-24 shrink-0">{c.label}</span>
+                  {c.items.map((it) => <Pill key={it}>{it}</Pill>)}
+                </div>
+              ))}
+            </Card>
+          </DetailSection>
+        )}
+
+        {/* ---------- 9. CHALLENGES & SOLUTIONS ---------- */}
+        {project.challengesSolutions && (
+          <DetailSection icon={AlertTriangle} title="Challenges & Solutions" color={pc}>
+            <div className="space-y-4">
+              {project.challengesSolutions.map((cs, i) => (
+                <div key={i} className="grid md:grid-cols-2 gap-3">
+                  <Card className="p-4" style={{ backgroundColor: PALETTE[4].bg }}>
+                    <div className="flex items-center gap-2 mb-1" style={{ color: PALETTE[4].c }}><AlertTriangle size={14} /> <span className="text-xs font-semibold font-body uppercase tracking-wide">Challenge</span></div>
+                    <p className="text-sm text-neutral-700 font-body">{cs.challenge}</p>
+                  </Card>
+                  <Card className="p-4" style={{ backgroundColor: PALETTE[1].bg }}>
+                    <div className="flex items-center gap-2 mb-1" style={{ color: PALETTE[1].c }}><CheckCircle2 size={14} /> <span className="text-xs font-semibold font-body uppercase tracking-wide">Solution</span></div>
+                    <p className="text-sm text-neutral-700 font-body">{cs.solution}</p>
+                  </Card>
+                </div>
+              ))}
+            </div>
+          </DetailSection>
+        )}
+
+        {/* ---------- 10. PROJECT STRUCTURE ---------- */}
+        {project.structure && (
+          <DetailSection icon={Terminal} title="Project Structure" color={pc}>
+            <div className="bg-neutral-950 rounded-2xl p-5 overflow-x-auto">
+              <pre className="text-xs text-neutral-300 font-mono leading-relaxed whitespace-pre">{project.structure}</pre>
+            </div>
+          </DetailSection>
+        )}
+
+        {/* ---------- 11. RESOURCES & LINKS ---------- */}
+        <DetailSection icon={Link2} title="Resources & Links" color={pc}>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {r.github && <Button variant="outline" icon={Github} href={r.github} className="!text-xs !py-2.5 justify-center">GitHub Repo</Button>}
+            {r.demo && <Button variant="outline" icon={ExternalLink} href={r.demo} className="!text-xs !py-2.5 justify-center">Live Demo</Button>}
+            {r.docs && <Button variant="outline" icon={FileText} href={r.docs} className="!text-xs !py-2.5 justify-center">Documentation</Button>}
+            {r.dataset && <Button variant="outline" icon={Database} href={r.dataset} className="!text-xs !py-2.5 justify-center">Dataset</Button>}
+          </div>
+        </DetailSection>
       </div>
     </section>
   );
