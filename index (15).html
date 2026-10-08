@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ziani Med — AI Engineering Student</title>
+<meta name="description" content="Portfolio of Ziani Med, AI engineering student at ENSAM Meknès.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+<style>
+:root{
+  --bg:#f5f5f7; --card:#fff; --ink:#0f0f12; --mut:#bcbcc4; --t2:#6e6e78; --line:#ebebf0; --soft:#f5f5f8;
+  --acc:#7c3aed; --acc2:#a78bfa; --accs:#f1eafe; --on-acc:#fff; --green:#22c55e;
+  --map:#e9e9ee; --road:#fff; --water:#d8e0f0; --park:#dfe9df; --shadow:0 10px 30px rgba(20,20,40,.06);
+  --r-card:28px; --r-in:18px;
+}
+[data-theme="dark"]{
+  --bg:#0b0b0e; --card:#141418; --ink:#f4f4f7; --mut:#4b4b56; --t2:#9c9ca8; --line:#24242b; --soft:#1b1b21;
+  --acc:#a78bfa; --acc2:#7c3aed; --accs:#251b3f; --on-acc:#14102a;
+  --map:#1c1c22; --road:#2b2b33; --water:#1d2540; --park:#1d2a22; --shadow:0 10px 30px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:24px}
+body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.5;transition:background .3s,color .3s}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+iconify-icon{display:inline-block;vertical-align:middle;flex:none}
+:focus-visible{outline:2px solid var(--acc);outline-offset:3px;border-radius:12px}
+.wrap{max-width:880px;margin:0 auto;padding:32px 24px 140px}
+
+/* ---------- header ---------- */
+.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:72px}
+.brand{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500}
+.brand svg{width:28px;height:28px;stroke:var(--ink)}
+.brand i{width:5px;height:5px;border-radius:50%;background:var(--acc);align-self:flex-end;margin-bottom:6px}
+.tools{display:flex;gap:10px;position:relative}
+.round{width:40px;height:40px;border-radius:50%;background:var(--card);border:1px solid var(--line);display:grid;place-items:center;font-size:18px;box-shadow:var(--shadow);transition:transform .2s}
+.round:hover{transform:scale(1.08)}
+.pop{position:absolute;right:0;top:50px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:8px;min-width:190px;box-shadow:0 20px 40px rgba(0,0,0,.14);display:none;z-index:50}
+.pop.open{display:block}
+.pop a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:14px;font-size:14px;font-weight:500}
+.pop a:hover{background:var(--accs);color:var(--acc)}
+
+/* ---------- hero ---------- */
+h1{font-size:clamp(34px,6.4vw,54px);line-height:1.16;font-weight:600;letter-spacing:-.025em}
+h1 .line{display:block;animation:rise .7s cubic-bezier(.2,.7,.2,1) both}
+h1 .line:nth-child(2){animation-delay:.1s}h1 .line:nth-child(3){animation-delay:.2s}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.g{color:var(--mut)} .p{color:var(--acc)}
+.av{display:inline-block;width:1.05em;height:1.05em;vertical-align:-.2em;margin:0 .12em;border-radius:.3em;overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,.28);border:2px solid var(--card)}
+.av img{width:100%;height:100%;object-fit:cover;filter:grayscale(1);display:block}
+.status{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:500;letter-spacing:0;padding:7px 14px 7px 8px;border-radius:999px;background:var(--card);border:1px solid var(--line);vertical-align:middle;margin-left:8px;position:relative;top:-4px}
+.led{width:18px;height:18px;border-radius:50%;background:rgba(34,197,94,.22);display:grid;place-items:center}
+.led::after{content:"";width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{50%{opacity:.35}}
+.cta{display:flex;align-items:center;gap:14px;margin:30px 0 14px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:var(--bg);font-weight:600;font-size:14px;padding:14px 22px;border-radius:16px;box-shadow:0 12px 24px rgba(0,0,0,.18);transition:transform .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn.ghost{background:var(--card);color:var(--ink);border:1px solid var(--line);box-shadow:none}
+.cta p{font-size:14.5px;font-weight:500;max-width:250px;line-height:1.45}
+.facts{display:flex;gap:10px;flex-wrap:wrap;margin:26px 0 44px}
+.fact{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:500;background:var(--card);border:1px solid var(--line);padding:8px 14px;border-radius:999px}
+.fact iconify-icon{color:var(--acc);font-size:16px}
+
+/* ---------- bento ---------- */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--r-card);padding:22px;min-height:210px;overflow:hidden;box-shadow:var(--shadow);transition:transform .25s,border-color .25s}
+.card:hover{transform:translateY(-3px);border-color:var(--acc2)}
+.tag{position:absolute;top:14px;left:14px;z-index:5;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:11px;font-weight:600}
+.s2{grid-column:span 2}
+.tl{margin-top:36px;padding-left:22px;position:relative}
+.tl::before{content:"";position:absolute;left:3.5px;top:6px;bottom:10px;width:2px;border-radius:2px;background:var(--line)}
+.tl div{position:relative;margin-bottom:13px}
+.tl div::before{content:"";position:absolute;left:-22px;top:5px;width:9px;height:9px;border-radius:50%;background:var(--ink)}
+.tl div:first-child{opacity:.4}
+.tl b{display:block;font-size:12.5px;font-weight:600}
+.tl small{font-size:10.5px;color:var(--t2)}
+.music{background:var(--soft);text-align:center}
+.covers{position:relative;height:118px;width:200px;margin:38px auto 10px}
+.cv{position:absolute;width:78px;height:78px;border-radius:16px;top:24px;display:grid;place-items:center;color:#fff;font-size:30px;box-shadow:0 10px 20px rgba(0,0,0,.22)}
+.cv:nth-child(1){left:0;transform:rotate(-9deg);background:linear-gradient(135deg,#334155,#0f172a)}
+.cv:nth-child(3){right:0;transform:rotate(9deg);background:linear-gradient(135deg,#f472b6,#7c3aed)}
+.cv:nth-child(2){left:50%;transform:translateX(-50%);width:96px;height:96px;top:6px;z-index:2;border:3px solid var(--card);border-radius:20px;font-size:38px;background:linear-gradient(135deg,#8b5cf6,#4c1d95)}
+.music h4{font-size:13px;font-weight:600}
+.music a{display:inline-flex;gap:4px;align-items:center;font-size:10.5px;color:var(--t2);margin-top:3px}
+.music a iconify-icon{color:var(--acc)}
+.read{background:var(--soft)}
+.read .meta{margin-top:38px;font-size:13px;font-weight:600;line-height:1.3;max-width:120px}
+.read .meta small{display:block;font-weight:400;font-size:10.5px;color:var(--t2);margin-top:4px}
+.book{position:absolute;right:18px;bottom:-34px;width:116px;height:158px;border-radius:12px 12px 0 0;background:linear-gradient(160deg,var(--acc2),var(--acc));padding:14px 12px;color:var(--on-acc);box-shadow:0 0 0 7px rgba(255,255,255,.14),0 14px 30px rgba(0,0,0,.2)}
+.book b{display:block;font-size:19px;line-height:1;letter-spacing:-.03em}
+.book small{position:absolute;bottom:44px;left:12px;font-size:9px;opacity:.8}
+.map{padding:0;background:var(--map)}
+.map svg{position:absolute;inset:0;width:100%;height:100%}
+.pin{position:absolute;left:50%;top:60%;transform:translate(-50%,-100%);display:flex;flex-direction:column;align-items:center;z-index:3}
+.pin span{background:var(--acc);color:var(--on-acc);font-size:10.5px;font-weight:600;padding:5px 10px;border-radius:999px;white-space:nowrap}
+.pin iconify-icon{font-size:26px;color:var(--acc);margin-top:-2px}
+.pulse{position:absolute;left:50%;top:60%;width:34px;height:34px;margin:-17px 0 0 -17px;border-radius:50%;background:var(--acc);opacity:.25;animation:ring 2.2s infinite;z-index:2}
+@keyframes ring{to{transform:scale(2.2);opacity:0}}
+.how-title{margin-top:44px;font-size:clamp(20px,3.2vw,26px);line-height:1.22;font-weight:600;letter-spacing:-.02em;max-width:460px}
+.flow{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:34px;position:relative}
+.flow::before{content:"";position:absolute;left:0;right:0;top:5px;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--acc) 0,var(--acc) 12%,var(--line) 12%)}
+.flow li{position:relative;padding-top:26px}
+.flow li::before{content:"";position:absolute;left:0;top:0;width:12px;height:12px;border-radius:50%;background:var(--card);border:2px solid var(--mut);transition:all .25s}
+.flow li.on::before,.flow li:hover::before{background:var(--acc);border-color:var(--acc);box-shadow:0 0 0 5px var(--accs);transform:scale(1.05)}
+.flow b{display:block;font-size:13.5px;font-weight:600;letter-spacing:-.01em}
+.flow small{display:block;font-size:11.5px;line-height:1.5;color:var(--t2);margin-top:4px}
+.now{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:40px}
+.now div{background:transparent;border:1px solid var(--line);border-radius:20px;padding:16px}
+.now iconify-icon{font-size:22px;color:var(--acc)}
+.now b{display:block;font-size:13px;margin:8px 0 3px}
+.now small{font-size:11px;color:var(--t2);display:block;line-height:1.45}
+.open h3{margin-top:38px;font-size:15px;font-weight:600;line-height:1.3}
+.open p{font-size:12px;color:var(--t2);margin:6px 0 14px}
+.flags{display:flex;gap:8px;flex-wrap:wrap}
+.flags span{background:var(--soft);border-radius:999px;padding:6px 12px;font-size:12px;font-weight:500}
+
+/* ---------- sections ---------- */
+section.blk{margin-top:84px}
+.head{display:flex;align-items:center;gap:10px;margin-bottom:22px}
+.head h2{font-size:26px;letter-spacing:-.02em;font-weight:600}
+.head .ic{width:38px;height:38px;border-radius:14px;background:var(--accs);color:var(--acc);display:grid;place-items:center;font-size:20px}
+.about{display:grid;grid-template-columns:1.3fr 1fr;gap:16px}
+.about .card{min-height:0}
+.about p{font-size:14.5px;color:var(--t2);line-height:1.7}
+.about p+p{margin-top:12px}
+.about p b{color:var(--ink);font-weight:600}
+.list{display:grid;gap:14px}
+.list div{display:flex;gap:12px;align-items:flex-start;font-size:13px;font-weight:600;line-height:1.3}
+.list small{display:block;font-weight:400;font-size:11.5px;color:var(--t2);margin-top:2px}
+.list .ic{width:34px;height:34px;border-radius:12px;background:var(--accs);color:var(--acc);display:grid;place-items:center;font-size:17px;flex:none}
+.path{display:grid;gap:12px}
+.path .row{display:grid;grid-template-columns:110px 1fr;gap:18px;background:var(--card);border:1px solid var(--line);border-radius:24px;padding:18px 22px}
+.path .when{font-size:12px;font-weight:600;color:var(--acc)}
+.path h4{font-size:14.5px;font-weight:600}
+.path p{font-size:12.5px;color:var(--t2);margin-top:3px}
+.projects{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.proj{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:var(--r-card);padding:22px;transition:transform .25s,border-color .25s;box-shadow:var(--shadow)}
+.proj:hover{transform:translateY(-3px);border-color:var(--acc)}
+.proj.big{grid-column:span 2;background:linear-gradient(135deg,var(--accs),var(--card) 70%)}
+.proj .t{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}
+.proj .ic{width:44px;height:44px;border-radius:16px;background:var(--accs);color:var(--acc);display:grid;place-items:center;font-size:22px}
+.proj.big .ic{background:var(--acc);color:var(--on-acc)}
+.proj .go{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-size:15px;background:var(--card)}
+.proj:hover .go{background:var(--acc);color:var(--on-acc);border-color:var(--acc)}
+.proj h3{font-size:17px;font-weight:600;letter-spacing:-.01em}
+.proj p{font-size:13px;color:var(--t2);margin:6px 0 16px;line-height:1.6;flex:1}
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.pills span{font-size:11px;font-weight:500;padding:5px 11px;border-radius:999px;background:var(--soft);border:1px solid var(--line)}
+.skills{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.skills .card{min-height:0}
+.skills h4{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600;margin-bottom:14px}
+.skills h4 .ic{width:32px;height:32px;border-radius:11px;background:var(--accs);color:var(--acc);display:grid;place-items:center;font-size:17px}
+.skills .pills span{background:var(--soft)}
+.contact{background:linear-gradient(135deg,#8b5cf6,#5b21b6);color:#fff;border:0;padding:34px;display:grid;grid-template-columns:1fr 1fr;gap:28px;border-radius:32px}
+.contact:hover{transform:none}
+.contact h2{font-size:30px;line-height:1.15;letter-spacing:-.02em;font-weight:600}
+.contact p{opacity:.8;font-size:14px;margin:12px 0 20px}
+.contact .btn{background:#fff;color:#2e1065}
+.social{display:flex;gap:10px;margin-top:18px}
+.social a{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.16);display:grid;place-items:center;font-size:19px;transition:background .2s}
+.social a:hover{background:#fff;color:#4c1d95}
+form{display:grid;gap:10px}
+input,textarea{font:inherit;font-size:13.5px;width:100%;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.12);color:#fff;border-radius:16px;padding:13px 16px;outline:none}
+input::placeholder,textarea::placeholder{color:rgba(255,255,255,.65)}
+input:focus,textarea:focus{border-color:#fff;background:rgba(255,255,255,.18)}
+textarea{min-height:100px;resize:vertical}
+footer{margin-top:48px;text-align:center;font-size:12px;color:var(--t2)}
+
+/* ---------- dock ---------- */
+.dock{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);display:flex;gap:4px;padding:7px;border-radius:999px;background:color-mix(in srgb,var(--card) 82%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--line);box-shadow:0 14px 40px rgba(0,0,0,.16);z-index:40}
+.dock a{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-size:21px;color:var(--t2);transition:all .2s;position:relative}
+.dock a:hover{color:var(--ink)}
+.dock a.on{background:var(--acc);color:var(--on-acc)}
+
+@media(max-width:780px){
+  .grid,.about,.projects,.skills,.contact{grid-template-columns:1fr}
+  .s2,.proj.big{grid-column:auto}
+  .flow{grid-template-columns:1fr;gap:20px;padding-left:26px}
+  .flow::before{left:5px;right:auto;top:6px;bottom:6px;width:2px;height:auto;background:var(--line)}
+  .flow li{padding:0}
+  .flow li::before{left:-26px;top:3px}
+  .path .row{grid-template-columns:1fr;gap:4px}
+  .top{margin-bottom:44px}
+  .cta p{max-width:none}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top" id="home">
+    <a class="brand" href="mailto:hey@zianimed.com" aria-label="Email me">
+      <svg viewBox="0 0 28 28" fill="none" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"><path d="M14 4.5c1.1 0 1.9.5 2.5 1.4l7 11.6c1.2 2-.2 4.5-2.5 4.5H7c-2.3 0-3.7-2.5-2.5-4.5l7-11.6c.6-.9 1.4-1.4 2.5-1.4Z"/><path d="M10 19c1.2-2.4 2.4-3.4 4-3.4s2.8 1 4 3.4"/></svg>
+      <i></i><span>hey@zianimed.com</span>
+    </a>
+    <div class="tools">
+      <button class="round" id="theme" aria-label="Toggle dark mode"><iconify-icon id="themeIc" icon="ph:moon-bold"></iconify-icon></button>
+      <button class="round" id="menuBtn" aria-label="Open menu" aria-expanded="false"><iconify-icon icon="ph:list-bold"></iconify-icon></button>
+      <nav class="pop" id="pop">
+        <a href="#about"><iconify-icon icon="ph:user-bold"></iconify-icon>About</a>
+        <a href="#journey"><iconify-icon icon="ph:path-bold"></iconify-icon>Journey</a>
+        <a href="#projects"><iconify-icon icon="ph:squares-four-bold"></iconify-icon>Projects</a>
+        <a href="#skills"><iconify-icon icon="ph:stack-bold"></iconify-icon>Skills</a>
+        <a href="#contact"><iconify-icon icon="ph:envelope-simple-bold"></iconify-icon>Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <h1>
+      <span class="line">Hi, I’m <span class="av"><img id="avatar" src="profile.jpg" alt="Ziani Med"></span> Ziani Med!</span>
+      <span class="line"><span class="g">I’m an</span> AI Engineering Student <span class="g">at</span></span>
+      <span class="line"><span class="p">ENSAM Meknès.</span><span class="status"><span class="led"></span>Open to work</span></span>
+    </h1>
+
+    <div class="cta">
+      <a class="btn" href="#contact"><iconify-icon icon="ph:calendar-check-bold"></iconify-icon>Book a call</a>
+      <p>Feel free to explore my portfolio and reach out — I’d love to connect!</p>
+    </div>
+    <div class="facts">
+      <span class="fact"><iconify-icon icon="ph:graduation-cap-bold"></iconify-icon>3rd-year engineering student</span>
+      <span class="fact"><iconify-icon icon="ph:brain-bold"></iconify-icon>AI · Digital Transformation · IS</span>
+      <span class="fact"><iconify-icon icon="ph:map-pin-bold"></iconify-icon>Errachidia, Morocco</span>
+    </div>
+
+    <section class="grid" aria-label="At a glance">
+      <article class="card">
+        <span class="tag">My Experience</span>
+        <div class="tl">
+          <div><b>YOLOv8 vision projects</b><small>Computer vision · Personal</small></div>
+          <div><b>AI student at ENSAM Meknès</b><small>Present · IATD-SI track</small></div>
+          <div><b>Genos AI Club</b><small>Building &amp; leading · ENSAM</small></div>
+          <div><b>AirSense AI capstone</b><small>Forecasting + RAG · Academic</small></div>
+        </div>
+      </article>
+
+      <article class="card music">
+        <span class="tag">My music playlist</span>
+        <div class="covers">
+          <span class="cv"><iconify-icon icon="ph:headphones-fill"></iconify-icon></span>
+          <span class="cv"><iconify-icon icon="ph:music-notes-fill"></iconify-icon></span>
+          <span class="cv"><iconify-icon icon="ph:vinyl-record-fill"></iconify-icon></span>
+        </div>
+        <h4>Med’s Playlist</h4>
+        <a href="https://open.spotify.com/" target="_blank" rel="noopener"><iconify-icon icon="ph:play-circle-fill"></iconify-icon>Play on Spotify</a>
+      </article>
+
+      <article class="card read">
+        <span class="tag">What I’m reading</span>
+        <div class="meta">Hands-On Machine Learning<small>Aurélien Géron</small></div>
+        <div class="book"><b>Hands-On<br>ML</b><small>O’Reilly</small></div>
+      </article>
+
+      <article class="card map">
+        <span class="tag">Map</span>
+        <svg viewBox="0 0 300 210" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <path d="M0 150 C60 130 90 170 160 150 S260 120 300 140 V210 H0Z" fill="var(--water)"/>
+          <rect x="196" y="22" width="70" height="52" rx="14" fill="var(--park)"/>
+          <rect x="22" y="30" width="50" height="40" rx="12" fill="var(--park)"/>
+          <g fill="none" stroke="var(--road)" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke-width="9" d="M-10 90 C70 70 130 110 310 80"/>
+            <path stroke-width="9" d="M110 -10 C100 60 140 120 120 220"/>
+            <path stroke-width="6" d="M-10 30 L310 40M190 -10 C200 50 230 90 250 220M30 -10 L60 220"/>
+            <path stroke-width="4" d="M0 125 L300 110M160 0 L170 150"/>
+          </g>
+        </svg>
+        <span class="pulse"></span>
+        <div class="pin"><span>Errachidia, Morocco</span><iconify-icon icon="ph:map-pin-fill"></iconify-icon></div>
+      </article>
+
+      <article class="card s2">
+        <span class="tag">How I work</span>
+        <h3 class="how-title">From raw data to <span class="g">something people can use.</span></h3>
+        <ol class="flow">
+          <li class="on"><b>Understand</b><small>Explore the data before touching a model.</small></li>
+          <li><b>Prototype</b><small>Notebooks and quick baselines.</small></li>
+          <li><b>Evaluate</b><small>Honest metrics, no cherry-picking.</small></li>
+          <li><b>Deploy</b><small>Streamlit and web apps people can try.</small></li>
+        </ol>
+      </article>
+
+      <article class="card s2">
+        <span class="tag">Currently building</span>
+        <div class="now">
+          <div><iconify-icon icon="ph:users-three-bold"></iconify-icon><b>Genos AI Club</b><small>An AI community at ENSAM Meknès — brand, events and growth.</small></div>
+          <div><iconify-icon icon="ph:timer-bold"></iconify-icon><b>StudyOS</b><small>A personal study planner with tasks, pomodoro, notes and exams.</small></div>
+        </div>
+      </article>
+
+      <article class="card open">
+        <span class="tag">Open to</span>
+        <h3>Grad studies &amp; work in Europe</h3>
+        <p>Looking for the next chapter abroad.</p>
+        <div class="flags"><span>🇫🇷 France</span><span>🇩🇪 Germany</span><span>🇳🇱 Netherlands</span></div>
+      </article>
+    </section>
+
+    <section class="blk" id="about">
+      <div class="head"><span class="ic"><iconify-icon icon="ph:user-bold"></iconify-icon></span><h2>About me</h2></div>
+      <div class="about">
+        <div class="card">
+          <p>I’m a <b>third-year engineering student at ENSAM Meknès</b>, specializing in <b>AI, Digital Transformation and Information Systems</b>. I like turning messy data into models that actually work, and turning those models into something people can click on.</p>
+          <p>My hands-on work spans <b>computer vision</b> with YOLOv8 and <b>time-series forecasting</b> with LSTM, ARIMA and Prophet. Outside of coursework I build web apps, run an AI club and keep learning in public.</p>
+        </div>
+        <div class="card"><div class="list">
+          <div><span class="ic"><iconify-icon icon="ph:graduation-cap-bold"></iconify-icon></span><span>ENSAM Meknès<small>École Nationale Supérieure d’Arts et Métiers</small></span></div>
+          <div><span class="ic"><iconify-icon icon="ph:cpu-bold"></iconify-icon></span><span>IATD-SI<small>AI, Digital Transformation &amp; Info. Systems</small></span></div>
+          <div><span class="ic"><iconify-icon icon="ph:map-pin-bold"></iconify-icon></span><span>Based in Errachidia<small>Morocco</small></span></div>
+          <div><span class="ic"><iconify-icon icon="ph:globe-hemisphere-west-bold"></iconify-icon></span><span>Targeting Europe<small>France · Germany · Netherlands</small></span></div>
+        </div></div>
+      </div>
+    </section>
+
+    <section class="blk" id="journey">
+      <div class="head"><span class="ic"><iconify-icon icon="ph:path-bold"></iconify-icon></span><h2>Journey</h2></div>
+      <div class="path">
+        <div class="row"><span class="when">Present</span><div><h4>Engineering degree — ENSAM Meknès</h4><p>Third year, IATD-SI track: machine learning, data science, information systems and digital transformation.</p></div></div>
+        <div class="row"><span class="when">Ongoing</span><div><h4>Founder &amp; lead — Genos AI Club</h4><p>Building an AI community on campus: workshops, brand identity and growth strategy.</p></div></div>
+        <div class="row"><span class="when">Academic</span><div><h4>Capstone — AirSense AI</h4><p>Air-quality forecasting combined with RAG-based knowledge retrieval.</p></div></div>
+        <div class="row"><span class="when">Next</span><div><h4>Graduate studies or a role in Europe</h4><p>Open to opportunities in France, Germany and the Netherlands.</p></div></div>
+      </div>
+    </section>
+
+    <section class="blk" id="projects">
+      <div class="head"><span class="ic"><iconify-icon icon="ph:squares-four-bold"></iconify-icon></span><h2>Selected projects</h2></div>
+      <div class="projects" id="projectList"></div>
+    </section>
+
+    <section class="blk" id="skills">
+      <div class="head"><span class="ic"><iconify-icon icon="ph:stack-bold"></iconify-icon></span><h2>Skills</h2></div>
+      <div class="skills" id="skillList"></div>
+    </section>
+
+    <section class="blk" id="contact">
+      <div class="card contact">
+        <div>
+          <h2>Let’s build something together.</h2>
+          <p>Internship, research, graduate program or a project idea — my inbox is open.</p>
+          <a class="btn" href="mailto:hey@zianimed.com"><iconify-icon icon="ph:envelope-simple-bold"></iconify-icon>hey@zianimed.com</a>
+          <div class="social">
+            <a href="https://github.com/" aria-label="GitHub" target="_blank" rel="noopener"><iconify-icon icon="ph:github-logo-bold"></iconify-icon></a>
+            <a href="https://linkedin.com/" aria-label="LinkedIn" target="_blank" rel="noopener"><iconify-icon icon="ph:linkedin-logo-bold"></iconify-icon></a>
+            <a href="mailto:hey@zianimed.com" aria-label="Email"><iconify-icon icon="ph:envelope-simple-bold"></iconify-icon></a>
+          </div>
+        </div>
+        <form id="form">
+          <input id="fn" placeholder="Your name" required aria-label="Your name">
+          <input id="fe" type="email" placeholder="Your email" required aria-label="Your email">
+          <textarea id="fm" placeholder="Tell me about your idea…" required aria-label="Message"></textarea>
+          <button class="btn" type="submit" style="justify-content:center"><iconify-icon icon="ph:paper-plane-tilt-bold"></iconify-icon>Send message</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>© <span id="yr"></span> Ziani Med · Designed &amp; built from scratch</footer>
+</div>
+
+<nav class="dock" aria-label="Sections">
+  <a href="#home" class="on" aria-label="Home"><iconify-icon icon="ph:house-bold"></iconify-icon></a>
+  <a href="#about" aria-label="About"><iconify-icon icon="ph:user-bold"></iconify-icon></a>
+  <a href="#projects" aria-label="Projects"><iconify-icon icon="ph:squares-four-bold"></iconify-icon></a>
+  <a href="#skills" aria-label="Skills"><iconify-icon icon="ph:stack-bold"></iconify-icon></a>
+  <a href="#contact" aria-label="Contact"><iconify-icon icon="ph:envelope-simple-bold"></iconify-icon></a>
+</nav>
+
+<script>
+const projects=[
+ {big:1,ic:'ph:wind-bold',t:'AirSense AI',d:'University capstone that forecasts air quality and pairs the predictions with a RAG knowledge-retrieval layer, so results can be explained in plain language.',tags:['Time series','RAG','Python','Forecasting']},
+ {ic:'ph:scan-bold',t:'LEONI MED',d:'Streamlit app that inspects images of electrical connectors and flags them as compliant or defective with a Keras EfficientNet model.',tags:['Keras','EfficientNet','Streamlit']},
+ {ic:'ph:lightning-bold',t:'Energy Regression Lab',d:'Jupyter notebook applying supervised regression to the UCI household electric power consumption dataset.',tags:['Regression','Jupyter','UCI']},
+ {ic:'ph:timer-bold',t:'StudyOS',d:'Personal study planner in plain HTML, CSS and JS with local storage: modules, tasks, pomodoro, notes and exams.',tags:['HTML','CSS','JavaScript']},
+ {ic:'ph:eye-bold',t:'Computer Vision Roadmap',d:'Interactive course page that walks through the computer vision learning path step by step.',tags:['Education','Computer vision']},
+ {ic:'ph:airplane-tilt-bold',t:'Louja Tours',d:'Luxury travel website built from scratch in vanilla HTML, CSS and JavaScript.',tags:['Web design','Vanilla JS']}
+];
+const skills=[
+ {ic:'ph:brain-bold',t:'Machine learning',s:['Supervised learning','Regression','Feature engineering','Model evaluation']},
+ {ic:'ph:eye-bold',t:'Computer vision',s:['YOLOv8','Image classification','EfficientNet','Keras']},
+ {ic:'ph:chart-line-up-bold',t:'Time series',s:['LSTM','ARIMA','Prophet','Forecasting']},
+ {ic:'ph:database-bold',t:'Data & systems',s:['Python','Data analysis','Information systems','Digital transformation']},
+ {ic:'ph:code-bold',t:'Web',s:['HTML','CSS','JavaScript','Streamlit']},
+ {ic:'ph:flask-bold',t:'Workflow',s:['Jupyter','Prototyping','Deployment','RAG']}
+];
+document.getElementById('projectList').innerHTML=projects.map(p=>`
+ <a class="proj ${p.big?'big':''}" href="#">
+  <div class="t"><span class="ic"><iconify-icon icon="${p.ic}"></iconify-icon></span><span class="go"><iconify-icon icon="ph:arrow-up-right-bold"></iconify-icon></span></div>
+  <h3>${p.t}</h3><p>${p.d}</p><div class="pills">${p.tags.map(x=>`<span>${x}</span>`).join('')}</div>
+ </a>`).join('');
+document.getElementById('skillList').innerHTML=skills.map(k=>`
+ <div class="card"><h4><span class="ic"><iconify-icon icon="${k.ic}"></iconify-icon></span>${k.t}</h4><div class="pills">${k.s.map(x=>`<span>${x}</span>`).join('')}</div></div>`).join('');
+
+/* avatar fallback: your initials until you add profile.jpg next to this file */
+const av=document.getElementById('avatar');
+av.onerror=()=>{av.onerror=null;av.src='data:image/svg+xml;utf8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#1a1a1f"/><text x="50" y="62" font-family="Arial" font-weight="700" font-size="40" text-anchor="middle" fill="#fff">ZM</text></svg>')};
+
+/* theme */
+const root=document.documentElement,ti=document.getElementById('themeIc');
+function setTheme(t){root.dataset.theme=t;ti.setAttribute('icon',t==='dark'?'ph:sun-bold':'ph:moon-bold');try{localStorage.setItem('theme',t)}catch(e){}}
+let saved=null;try{saved=localStorage.getItem('theme')}catch(e){}
+setTheme(saved||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));
+document.getElementById('theme').onclick=()=>setTheme(root.dataset.theme==='dark'?'light':'dark');
+
+/* menu */
+const mb=document.getElementById('menuBtn'),pop=document.getElementById('pop');
+mb.onclick=e=>{e.stopPropagation();mb.setAttribute('aria-expanded',pop.classList.toggle('open'))};
+document.addEventListener('click',()=>{pop.classList.remove('open');mb.setAttribute('aria-expanded','false')});
+
+/* dock highlight */
+const links=[...document.querySelectorAll('.dock a')];
+const ids=['home','about','projects','skills','contact'];
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.toggle('on',l.getAttribute('href')==='#'+e.target.id))}}),{rootMargin:'-45% 0px -50% 0px'});
+ids.forEach(i=>io.observe(document.getElementById(i)));
+
+/* contact form → mail client */
+document.getElementById('form').onsubmit=e=>{e.preventDefault();
+ const n=fn.value,m=fm.value,f=fe.value;
+ location.href='mailto:hey@zianimed.com?subject='+encodeURIComponent('Portfolio message from '+n)+'&body='+encodeURIComponent(m+'\n\n— '+n+' ('+f+')');};
+document.getElementById('yr').textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
